@@ -1,0 +1,98 @@
+---
+//import Button from "./Button.astro"
+
+const points = [
+  "Birthday cakes ready in 2 days",
+  "Bridal cakes booked 7 days ahead",
+  "Pay with M-Pesa, no card needed",
+];
+---
+
+<section class="px-6 pb-16 pt-8 sm:px-8 md:pb-20 md:pt-8 lg:px-10">
+  <div
+    class="mx-auto grid max-w-[1160px] items-center gap-10 md:grid-cols-[1.08fr_.92fr] md:gap-12 lg:gap-16"
+  >
+    <!-- Text -->
+    <div>
+      <h1
+        class="max-w-[13ch] font-serif text-[36px] leading-[1.05] tracking-tight sm:text-[42px] md:text-[46px] lg:text-[62px] lg:leading-[1.08]"
+      >
+        Cakes for the days<br />
+        your family will<br />
+        talk about
+      </h1>
+
+      <p
+        class="mt-5 max-w-[46ch] text-sm leading-[1.45] text-muted sm:text-base lg:text-lg"
+      >
+        Birthday cakes, bridal cakes, cupcakes and fresh pastries, baked to
+        order. Pay with M-Pesa, then collect or have it delivered.
+      </p>
+
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a
+          href="#cakes"
+          class="rounded-full bg-btn px-5 py-2.5 text-xs font-medium text-white transition hover:bg-deep"
+        >
+          Shop cakes
+        </a>
+        <a
+          href="#custom-cakes"
+          class="rounded-full border border-ink px-5 py-2.5 text-xs font-medium text-ink transition hover:bg-surface"
+        >
+          Design a custom cake
+        </a>
+      </div>
+
+      <ul class="mt-6 grid gap-2 text-xs sm:text-sm">
+        {
+          points.map((text) => (
+            <li class="flex items-center gap-2.5">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="shrink-0 text-gold"
+                aria-hidden="true"
+              >
+                <path d="m5 12 5 5 9-10" />
+              </svg>
+              {text}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Arch picture -->
+    <div class="relative mx-auto w-[82%] max-w-[400px] md:w-full">
+      <!-- Gold outline, sitting 14px outside the picture -->
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -inset-3.5 rounded-t-[50%/40%] rounded-b-[38px] border-2 border-gold"
+      >
+      </div>
+
+      <!--
+        The arch: 4:5 shape. The top corners use 50% across and 40% down, which makes a
+        perfect half-circle on a 4:5 box. The bottom corners are a fixed 28px.
+      -->
+      <div
+        class="relative aspect-[4/5] overflow-hidden rounded-t-[50%/40%] rounded-b-[28px] bg-blush motion-safe:animate-rise"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85"
+          alt="A tiered bridal cake decorated with pink and white flowers"
+          loading="eager"
+          fetchpriority="high"
+          class="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>

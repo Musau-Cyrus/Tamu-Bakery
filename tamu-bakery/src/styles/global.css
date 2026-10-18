@@ -12,11 +12,22 @@
   --color-muted: #7A6762;
   --color-line: #EFCBD3;
   --color-mpesa: #2E9D4A;
- 
+  --color-tint-pink: #FBE3E6;
+  --color-tint-choc: #F3E2D6;
+  --color-tint-peach: #FDEAD6;
+  --color-tint-butter: #FBEFD5;
+  --color-tint-cream: #F6EBDD;
+
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Poppins", system-ui, sans-serif;
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from { transform: translateY(28px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
 }
- 
+
 @layer base {
   html { background: var(--color-bg); scroll-behavior: smooth; }
   body { font-family: var(--font-sans); color: var(--color-ink); line-height: 1.6; }

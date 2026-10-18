@@ -1,9 +1,8 @@
 ---
-import "../styles/global.css";
-import Footer from "../components/Footer.astro";
+import BasedLayout from "../layouts/BasedLayout.astro";
+import Hero from "../components/Hero.astro";
 ---
 
-<h1 class="text-4xl text-btn">Tamu Bakery</h1>
-<p class="bg-blush p-4 text-ink">Tailwind is working.</p>
-
-<Footer />
+<BasedLayout title="Tamu Bakery">
+  <Hero />
+</BasedLayout>
