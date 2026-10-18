@@ -1,18 +1,8 @@
 ---
-import Header from "../components/Header.astro";
+import BasedLayout from "../layouts/BasedLayout.astro";
 import Hero from "../components/Hero.astro";
 ---
 
-<doctype html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8"/>
-            <meta name="viewport" content="width-device-width, initial-scale=1.0"/>
-            <title>Tamu Bakery</title>
-        </head>
-        <body>
-            <Header cartCount={2}/>
-            <Hero/>
-        </body>
-    </html>
-</doctype>
+<BasedLayout title="Tamu Bakery">
+  <Hero />
+</BasedLayout>

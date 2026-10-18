@@ -10,6 +10,7 @@ A fast, mobile-first online bakery for Kenya. Customers browse birthday cakes, b
  
 ## Contents
  
+ 
 - [Goals](#goals)
 - [Features](#features)
 - [Tech stack](#tech-stack)
