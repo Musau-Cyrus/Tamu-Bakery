@@ -1,0 +1,71 @@
+---
+interface Props {
+  value?: number;
+  min?: number;
+  max?: number;
+  name?: string;
+  label?: string;
+}
+
+const { value = 1, min = 1, max = 20, name, label = "Quantity" } = Astro.props;
+---
+
+<div
+  data-quantity
+  datat-min={min}
+  data-max={max}
+  role="group"
+  aria-label={label}
+  class="inline-flex items-center rounded-full border-[1.5px] border-line bg-surface px-0.5"
+>
+  <button
+    type="button"
+    data-minus
+    aria-label="Decrease quantity"
+    class="grid h-8.5 w-8.5 place-items-center rounded-full text-lg leading-none hover:bg-blush"
+    >&minus;</button
+  >
+
+  <output
+    data-value
+    aria-live="polite"
+    class="min-w-7 text-center text-sm font-medium">{value}</output
+  >
+
+  <button
+    type="button"
+    data-plus
+    aria-label="Increase quantity"
+    class="grid h-8.5 w-8.5 place-items-center rounded-full text-lg leading-none hover:bg-blush"
+    >+</button
+  >
+
+  {name && <input type="hidden" name={name} value={value} data-input />}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-quantity]").forEach((el) => {
+    const min = Number(el.dataset.min);
+    const max = Number(el.dataset.max);
+    const out = el.querySelector<HTMLElement>("[data-value]")!;
+    const input = el.querySelector<HTMLInputElement>("[data-input]");
+    let n = Number(out.textContent);
+
+    const set = (next: number) => {
+      n = Math.min(max, Math.max(min, next));
+      out.textContent = String(n);
+      if (input) input.value = String(n);
+      el.dispatchEvent(
+        new CustomEvent("quantity-change", {
+          detail: { value: n },
+          bubbles: true,
+        }),
+      );
+    };
+
+    el.querySelector("[data-minus]")!.addEventListener("click", () =>
+      set(n - 1),
+    );
+    el.querySelector("data-plus")!.addEventListener("click", () => set(n + 1));
+  });
+</script>

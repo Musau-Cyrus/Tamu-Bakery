@@ -1,0 +1,140 @@
+---
+type InputType =
+  | "button"
+  | "checkbox"
+  | "color"
+  | "date"
+  | "datetime-local"
+  | "email"
+  | "file"
+  | "hidden"
+  | "image"
+  | "month"
+  | "number"
+  | "password"
+  | "radio"
+  | "range"
+  | "reset"
+  | "search"
+  | "submit"
+  | "tel"
+  | "text"
+  | "time"
+  | "url"
+  | "week";
+
+interface Props {
+  label: string;
+  name: string;
+  id?: string;
+  as?: "input" | "select" | "textarea";
+  type?: InputType;
+  value?: string;
+  placeholder?: string;
+  required?: boolean;
+  hint?: string;
+  error?: string;
+  rows?: number;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  label,
+  name,
+  id = name,
+  as: tag = "input",
+  type = "text",
+  value,
+  placeholder,
+  required = false,
+  hint,
+  error,
+  rows = 3,
+  class: extra,
+  ...rest
+} = Astro.props;
+
+const hintId = hint ? id + "-hint" : undefined;
+const errorId = error ? id + "-error" : undefined;
+const describeId = [hintId, errorId].filter(Boolean).join("") || undefined;
+
+//text-base (16px) stops iphones from zooming in when a field is tapped
+const control =
+  "w-full rounded-xl border-[1.5px] px-3.5 py-3 text-base text-ink placeholder:text-muted/70 focus:border-rose focus:outline-none focus:ring-4 focus:right-rose/30";
+
+const state = error ? "border-red-600" : "border-line";
+const classes = [control, state];
+const invalid = error ? "true" : undefined;
+---
+
+<div class.list={["grid gap-1.5", extra]}>
+  <label for={id} class="text-[13px] font-medium">
+    {label}
+    {
+      required && (
+        <span class="text-btn" aria-hidden="true">
+          *
+        </span>
+      )
+    }
+  </label>
+
+  {
+    tag == "select" ? (
+      <select
+        name={name}
+        id={id}
+        required={required}
+        aria-invalid={invalid}
+        aria-describedby={describeId}
+        class:list={classes}
+        {...rest}
+      >
+        <slot />
+      </select>
+    ) : tag == "textarea" ? (
+      <textarea
+        name={name}
+        id={id}
+        rows={rows}
+        required={required}
+        placeholder={placeholder}
+        aria-invalid={invalid}
+        aria-describedby={describeId}
+        class:list={classes}
+        {...rest}
+      >
+        {value}
+      </textarea>
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        value={value}
+        required={required}
+        placeholder={placeholder}
+        aria-invalid={invalid}
+        aria-describedby={describeId}
+        class:list={classes}
+        {...rest}
+      />
+    )
+  }
+  {
+    hint && (
+      <p id={hintId} class="text-xs text-muted">
+        {" "}
+        {hint}
+      </p>
+    )
+  }
+  {
+    error && (
+      <p id={errorId} role="alert" class="text-xs text-red-700">
+        {error}
+      </p>
+    )
+  }
+</div>

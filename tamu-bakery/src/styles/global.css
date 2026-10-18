@@ -12,6 +12,11 @@
   --color-muted: #7A6762;
   --color-line: #EFCBD3;
   --color-mpesa: #2E9D4A;
+  --color-tint-pink:   #FBE3E6;
+  --color-tint-choc:   #F3E2D6;
+  --color-tint-peach:  #FDEAD6;
+  --color-tint-butter: #FBEFD5;
+  --color-tint-cream:  #F6EBDD;
  
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Poppins", system-ui, sans-serif;

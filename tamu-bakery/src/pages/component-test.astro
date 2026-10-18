@@ -1,0 +1,76 @@
+---
+// src/pages/components.astro  (copy this file there; delete it before launch)
+// One page that shows every component, so you can compare it with the Figma design.
+
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Chip from "../components/Chip.astro";
+import Field from "../components/Field.astro";
+import Quantity from "../components/Quantity.astro";
+import ArchPanel from "../components/ArchPanel.astro";
+import ProductCard from "../components/ProductCard.astro";
+
+const products = (await getCollection("products")).slice(0, 4);
+---
+
+<BaseLayout title="Components">
+  <div class="mx-auto grid max-w-290 gap-12 px-4 py-12 lg:px-10">
+    <section class="grid gap-4">
+      <h2 class="text-3xl">Buttons</h2>
+      <div class="flex flex-wrap items-center gap-3">
+        <Button>Primary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="gold">Gold</Button>
+        <Button size="sm">Small</Button>
+        <Button disabled>Disabled</Button>
+      </div>
+      <div class="max-w-sm"><Button full>Pay KES 13,325 with M-Pesa</Button></div>
+    </section>
+
+    <section class="grid gap-4">
+      <h2 class="text-3xl">Chips</h2>
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <Chip selected>All</Chip>
+        <Chip>Birthday</Chip>
+        <Chip>Bridal</Chip>
+        <Chip>Cupcakes</Chip>
+        <Chip>Pastries</Chip>
+        <Chip>Bread</Chip>
+      </div>
+    </section>
+
+    <section class="grid max-w-md gap-4">
+      <h2 class="text-3xl">Fields</h2>
+      <Field label="Your name" name="name" required placeholder="Wanjiru Kamau" />
+      <Field label="M-Pesa phone number" name="phone" type="tel" inputmode="tel" placeholder="0712 345 678" hint="You will get the payment prompt on this number." />
+      <Field label="Delivery area" name="zone" as="select">
+        <option>Nairobi central and Westlands (KES 350)</option>
+        <option>Greater Nairobi (KES 700)</option>
+      </Field>
+      <Field label="Design details" name="notes" as="textarea" rows={4} placeholder="Colours, theme, message on the cake" />
+      <Field label="Date" name="date" type="date" error="Pick a date at least 2 days away" />
+    </section>
+
+    <section class="grid gap-4">
+      <h2 class="text-3xl">Quantity</h2>
+      <div><Quantity name="qty" /></div>
+    </section>
+
+    <section class="grid gap-4">
+      <h2 class="text-3xl">Arch panels</h2>
+      <div class="grid max-w-2xl grid-cols-3 gap-4">
+        <ArchPanel tint="pink" />
+        <ArchPanel tint="peach" />
+        <ArchPanel tint="butter" />
+      </div>
+    </section>
+
+    <section class="grid gap-4">
+      <h2 class="text-3xl">Product cards</h2>
+      <div class="grid grid-cols-2 gap-x-4 gap-y-7 md:grid-cols-3 lg:grid-cols-4">
+        {products.map((p) => <ProductCard product={p} />)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
