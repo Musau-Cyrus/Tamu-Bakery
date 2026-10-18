@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FDEEF1;
+  --color-surface: #FFFFFF;
+  --color-blush: #F8D9E0;
+  --color-rose: #D98695;
+  --color-btn: #A94A5F;
+  --color-deep: #8E3B4F;
+  --color-gold: #C9A24D;
+  --color-ink: #3B2A26;
+  --color-muted: #7A6762;
+  --color-line: #EFCBD3;
+  --color-mpesa: #2E9D4A;
+ 
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Poppins", system-ui, sans-serif;
+    --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    @keyframes rise {
+      from { transform: translateY(28px); opacity: 0; }
+      to   { transform: none; opacity: 1; }
+    }
+}
+ 
+@layer base {
+  html { background: var(--color-bg); scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); color: var(--color-ink); line-height: 1.6; }
+  h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; }
+  :focus-visible { outline: 3px solid var(--color-gold); outline-offset: 2px; }
+}
