@@ -1,0 +1,74 @@
+---
+const socialLinks = [
+  { name: "WhatsApp", href: "https://wa.me/" },
+  { name: "Instagram", href: "https://instagram.com/" },
+  { name: "TikTok", href: "https://tiktok.com/" },
+  { name: "Facebook", href: "https://facebook.com/" },
+];
+---
+
+<footer class="bg-[#920b43] px-6 py-10 text-white sm:px-10 md:px-16 lg:px-24">
+  <div
+    class="mx-auto grid max-w-7xl grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-16"
+  >
+    <!-- Column 1: Bakery brand and payment -->
+    <div>
+      <h2 class="font-serif text-xl font-bold tracking-wide">
+        Tamu Bakery
+      </h2>
+
+      <p class="mt-2 max-w-xs text-sm leading-relaxed text-white/85">
+        Cakes and bakes made fresh in Kenya.
+        "Tamu" means sweet.
+      </p>
+
+      <a
+        href="/payment"
+        class="mt-5 inline-flex w-full max-w-[255px] items-center justify-center
+               rounded-full bg-[#fffdf0] px-6 py-3 text-sm font-medium
+               text-gray-700 transition hover:bg-white hover:shadow-lg"
+      >
+        Pay with MPesa
+      </a>
+    </div>
+
+    <!-- Column 2: Visit and opening hours -->
+    <div>
+      <h3 class="font-serif text-lg font-bold">Visit</h3>
+
+      <address class="mt-2 space-y-1 text-sm not-italic text-white/90">
+        <p>Your street address, your town</p>
+        <p>Mon to Sat: 7am to 7pm</p>
+        <p>Sun: 9am to 4pm</p>
+      </address>
+    </div>
+
+    <!-- Column 3: Social media -->
+    <div>
+      <h3 class="font-serif text-lg font-bold">Visit</h3>
+
+      <ul class="mt-2 space-y-1 text-sm">
+        {socialLinks.map((social) => (
+          <li>
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-white/90 transition hover:text-white hover:underline"
+            >
+              {social.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Optional copyright -->
+  <div
+    class="mx-auto mt-10 max-w-7xl border-t border-white/20 pt-5 text-center
+           text-xs text-white/70"
+  >
+    &copy; {new Date().getFullYear()} Tamu Bakery. All rights reserved.
+  </div>
+</footer>
