@@ -1,0 +1,14 @@
+{
+    "name":"Three Tier Bridal Cake",
+    "category":"bridal",
+    "description":"A tall showpiece for the big day, finished with fresh or sugar flowers.",
+    "leadDays":7,
+    "deposit":true,
+    "flavours":["Vanilla", "Chocolate", "Red velvet", "Traditional Fruit Cake"],
+    "sizes":[
+        {"label":"serves 120", "price":48000},
+        {"label":"serves 180", "price":65000}
+    ],
+    "note":{"label":"Message on the cake(optional)", "maxLength":40, "placeholder":"Ivory and sage green, names on the top tier"},
+    "image":"/assets/products/three-tier-bridal-cake.jpeg"
+}

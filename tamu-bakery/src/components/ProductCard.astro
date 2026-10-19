@@ -2,19 +2,7 @@
 import { Image } from "astro:assets";
 import ArchPanel from "./ArchPanel.astro";
 import Button from "./Button.astro";
-
-interface Product {
-  id: string;
-  data: {
-    name: string;
-    description: string;
-    category: "birthday" | "bridal" | "cupcakes" | "pastries" | "bread";
-    image: string;
-    leadDays: number;
-    soldOut: boolean;
-    sizes: Array<{ price: number }>;
-  };
-}
+import type { Product } from "../lib/products";
 
 interface Props {
   product: Product;

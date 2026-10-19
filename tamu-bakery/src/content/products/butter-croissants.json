@@ -1,0 +1,13 @@
+{
+    "name":"Butter Croissants",
+    "category":"pastries",
+    "description":"Flaky, golden and baked fresh in the morning.",
+    "leadDays":1,
+    "deposit":false,
+    "flavours":["Plain butter", "Chocolate Filled"],
+    "sizes":[
+        {"label":"Box of 4", "price":600},
+        {"label":"Box of 8", "price":1100}
+    ],
+    "image":"/assets/products/butter-croissants.jpeg"
+}

@@ -1,0 +1,13 @@
+{
+    "name":"Cinnamon Rolls",
+    "category":"pastries",
+    "description":"Soft, sticky rolls with a warm cinnamon swirl",
+    "leadDays":1,
+    "deposit":false,
+    "flavours":["Creame cheese icing", "Caramel glaze"],
+    "sizes":[
+        {"label":"Box of 4", "price":900},
+        {"label":"Box of 8", "price":1700}
+    ],
+    "image":"/assets/products/cinnamon-roll.jpeg"
+}

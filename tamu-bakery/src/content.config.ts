@@ -1,16 +1,24 @@
-import { defineCollection, z } from "astro:content";
-
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { glob } from "astro/loaders";
+ 
 const products = defineCollection({
-  type: "data",
+  loader: glob({ pattern: "**/*.json", base: "./src/content/products" }),
   schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    category: z.enum(["birthday", "bridal", "cupcakes", "pastries", "bread"]),
-    image: z.string(),
-    leadDays: z.number().int().nonnegative(),
-    soldOut: z.boolean().default(false),
-    sizes: z.array(z.object({ price: z.number().nonnegative() })),
-  }),
+      name: z.string(),
+      category: z.enum(["birthday", "bridal", "cupcakes", "pastries", "bread"]),
+      description: z.string(),
+      leadDays: z.number().int().min(0),
+      deposit: z.boolean().default(false),
+      flavours: z.array(z.string()).min(1),
+      sizes: z.array(z.object({
+        label: z.string(),
+        price: z.number().int().positive(),
+      })).min(1),
+      note: z.object({ label: z.string(), maxLength: z.number(), placeholder: z.string() }).optional(),
+      image: z.string(),
+      soldOut: z.boolean().default(false),
+    }),
 });
-
+ 
 export const collections = { products };

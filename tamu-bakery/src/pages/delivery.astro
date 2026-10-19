@@ -1,0 +1,54 @@
+---
+// src/pages/delivery.astro  ->  /delivery
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ZONES, SLOTS, NOTICE, PICKUP } from "../lib/delivery";
+import { kes } from "../lib/products";
+---
+
+<BaseLayout title="Delivery and pickup | Tamu Bakery" description="Delivery fees, pickup details and how much notice we need.">
+  <div class="mx-auto max-w-[1160px] px-4 py-10 lg:px-10 lg:py-16">
+    <h1 class="text-[34px] lg:text-[48px]">Delivery and pickup</h1>
+
+    <div class="mt-10 grid gap-12 md:grid-cols-3 md:gap-10">
+      <section aria-labelledby="fees">
+        <h2 id="fees" class="text-2xl">Delivery fees</h2>
+        <ul class="mt-4 grid gap-3 text-sm">
+          {
+            ZONES.map((z) => (
+              <li class="flex justify-between gap-4 border-b border-line pb-3">
+                <span>{z.name}</span>
+                <span class="whitespace-nowrap font-medium">{kes(z.fee)}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <h3 class="mt-8 text-lg">Delivery time slots</h3>
+        <ul class="mt-3 grid gap-1.5 text-sm text-muted">
+          {SLOTS.map((s) => <li>{s}</li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="pickup">
+        <h2 id="pickup" class="text-2xl">Pickup</h2>
+        <p class="mt-4 text-sm text-muted">Collect from our shop at <strong class="text-ink">{PICKUP.address}</strong>.</p>
+        <ul class="mt-3 grid gap-1.5 text-sm text-muted">
+          {PICKUP.hours.map((h) => <li>{h}</li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="notice">
+        <h2 id="notice" class="text-2xl">How much notice we need</h2>
+        <ul class="mt-4 grid gap-3 text-sm">
+          {
+            NOTICE.map((n) => (
+              <li class="flex justify-between gap-4 border-b border-line pb-3">
+                <span>{n.label}</span>
+                <span class="whitespace-nowrap font-medium">{n.time}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

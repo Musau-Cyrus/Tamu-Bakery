@@ -1,0 +1,13 @@
+{
+    "name":"Fresh Mandazi",
+    "category":"pastries",
+    "description":"Light spiced and fluffy, just right with chai.",
+    "leadDays":0,
+    "deposit":false,
+    "flavours":["Classic", "Coconut", "Cardamom"],
+    "sizes":[
+        {"label":"Pack of 12", "price":300},
+        {"label":"Pack of 24", "price":550}
+    ],
+    "image":"/assets/products/fresh-mandazi.jpeg"
+}
