@@ -1,0 +1,13 @@
+{
+    "name":"Soft Milk Bread",
+    "category":"bread",
+    "description":"Fresh sandwich loaf, soft inside with a golden crust.",
+    "leadDays":0,
+    "deposit":false,
+    "flavours":["White", "Brown", "Wholemeal"],
+    "sizes":[
+        {"label":"Loaf of 400g", "price":70},
+        {"label":"Loaf of 800g", "price":130}
+    ],
+    "image":"/assets/products/soft-milk-bread.jpeg"
+}

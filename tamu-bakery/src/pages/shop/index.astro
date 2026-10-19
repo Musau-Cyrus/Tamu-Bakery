@@ -1,0 +1,15 @@
+---
+// src/pages/shop/index.astro  ->  /shop  (every product)
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ShopList from "../../components/ShopList.astro";
+
+const products = await getCollection("products");
+---
+
+<BaseLayout title="Shop | Tamu Bakery" description="Birthday cakes, bridal cakes, cupcakes, pastries and bread.">
+  <div class="mx-auto max-w-[1160px] px-4 py-10 lg:px-10 lg:py-16">
+    <h1 class="text-[34px] lg:text-[48px]">All treats</h1>
+    <div class="mt-6"><ShopList products={products} /></div>
+  </div>
+</BaseLayout>

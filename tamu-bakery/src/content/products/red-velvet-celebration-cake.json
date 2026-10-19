@@ -1,0 +1,14 @@
+{
+    "name":"Red Velvet Cakes",
+    "category":"birthday",
+    "description":"Deep red sponge with smooth cream cheese frosting.",
+    "leadDays":2,
+    "deposit":false,
+    "flavours":["Cream Cheese Frosting", "Vanilla buttercream"],
+    "sizes":[
+        {"label":"1kg, serves 10", "price":4000},
+        {"label":"2kg, serves 20", "price":7200}
+    ],
+    "note":{"label":"Message on the cake(optional)", "maxLength":40, "placeholder":"Congaratulations Njeri"},
+    "image":"/assets/products/red-velvet-cake.jpeg"
+}

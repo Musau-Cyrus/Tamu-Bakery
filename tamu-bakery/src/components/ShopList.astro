@@ -1,0 +1,35 @@
+---
+// src/components/ShopList.astro
+// Filter chips (each one links to a category page) plus the grid of product cards.
+//
+// Usage:
+//   <ShopList products={items} active="birthday" />   // on /shop/birthday
+//   <ShopList products={all} />                       // on /shop (All is highlighted)
+
+import Chip from "./Chip.astro";
+import ProductCard from "./ProductCard.astro";
+import { CATEGORIES, type Product } from "../lib/products";
+
+interface Props {
+  products: Product[];
+  active?: string;
+}
+
+const { products, active } = Astro.props;
+---
+
+<!-- On phones the chips scroll sideways instead of wrapping -->
+<div class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:mx-0 lg:px-0" role="navigation" aria-label="Categories">
+  <Chip href="/shop" selected={!active}>All</Chip>
+  {CATEGORIES.map((c) => <Chip href={"/shop/" + c.id} selected={active === c.id}>{c.short}</Chip>)}
+</div>
+
+{
+  products.length > 0 ? (
+    <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+      {products.map((p) => <ProductCard product={p} />)}
+    </div>
+  ) : (
+    <p class="mt-10 text-muted">Nothing here yet. Please check back soon.</p>
+  )
+}

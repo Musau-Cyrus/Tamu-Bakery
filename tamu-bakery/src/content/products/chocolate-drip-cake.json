@@ -1,0 +1,14 @@
+{
+    "name":"Chocolate Drip Cake",
+    "category":"birthday",
+    "description":"Rich chocolate layers under glossy ganache, topped with cherries.",
+    "leadDays":2,
+    "deposit":false,
+    "flavours":["Dark Chocolate", "Chocolate and Caramel", "Chocolate and Coffee"],
+    "sizes":[
+        {"label":"1kg, serves 10", "price":4200},
+        {"label":"2kg, serves 20", "price":7800}
+    ],
+    "note":{"label":"Message on the cake(optional)", "maxLength":40, "placeholder":"Happy birthday Kelvin"},
+    "image":"/assets/products/chocolate-drip-cake.jpeg"
+}
