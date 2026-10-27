@@ -1,30 +1,40 @@
 ---
 interface Props {
-    selected?: boolean;
-    href?: string;
-    class?: string;
-    [key: string]: any;
+  selected?: boolean;
+  href?: string;
+  class?: string;
+  [key: string]: any;
 }
 
-const {selected = false, href, class: extra, ...rest} = Astro.props;
+const { selected = false, href, class: extra, ...rest } = Astro.props;
 
 const classes = [
-    "inline-flex shrink-0 item-center rounded-full border=[1.5px] px-4 py-2 text-[13px]font-medium transition-colors",
-    selected
-        ? "border-btn bg-btn text-white"
-        : "border-line bg-surface text-ink hover:border-rose",
-    extra,
+  "inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-[11px] font-medium transition-colors",
+  selected
+    ? "border-btn bg-btn text-white"
+    : "border-rose bg-surface text-ink hover:border-btn",
+  extra,
 ];
 ---
 
 {
-    href ? (
-        <a href={href} aria-current={selected ? "page" : undefined} class:list={classes} {...rest}>
-            <slot/>
-        </a>
-    ):(
-        <button type="button" aria-pressed={selected} class:list={classes} {...rest}>
-            <slot/>
-        </button>
-    )
+  href ? (
+    <a
+      href={href}
+      aria-current={selected ? "page" : undefined}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      type="button"
+      aria-pressed={selected}
+      class:list={classes}
+      {...rest}
+    >
+      <slot />
+    </button>
+  )
 }

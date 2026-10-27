@@ -1,8 +1,172 @@
 ---
-import BasedLayout from "../layouts/BasedLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import CategoryTile from "../components/CategoryTile.astro";
+import ShopList from "../components/ShopList.astro";
+import Button from "../components/Button.astro";
+import { CATEGORIES, getProducts } from "../lib/products";
+import { ZONES, NOTICE } from "../lib/delivery";
+
+const products = await getProducts();
+
+// Four tiles: use the first product's photo in each category as the cover picture
+const tileIds = ["birthday", "bridal", "cupcakes", "pastries"];
+const tiles = CATEGORIES.filter((c) => tileIds.includes(c.id)).map((c) => ({
+  ...c,
+  image: products.find((p) => p.data.category === c.id)?.data.image,
+}));
+
+// Sample reviews. Replace with real customer feedback.
+const reviews = [
+  {
+    quote:
+      "The cake looked exactly like the photo I sent, and it was gone in twenty minutes.",
+    who: "Wanjiru, birthday cake",
+  },
+  {
+    quote:
+      "Our three-tier wedding cake arrived on time and still perfect after the drive.",
+    who: "Brian and Atieno, wedding",
+  },
+  {
+    quote: "Paying with M-Pesa took a minute, and the croissants arrived warm.",
+    who: "Kevin, pastry box",
+  },
+];
 ---
 
-<BasedLayout title="Tamu Bakery">
+<BaseLayout title="Tamu Bakery | Birthday and bridal cakes, baked to order">
   <Hero />
-</BasedLayout>
+
+  <!-- Shop by occasion -->
+  <section
+    class="px-4 pb-14 lg:px-10 lg:pb-20"
+    aria-labelledby="occasion-heading"
+  >
+    <div class="mx-auto max-w-290">
+      <h2 id="occasion-heading" class="text-[30px] lg:text-[40px]">
+        Shop by occasion
+      </h2>
+      <p class="mt-2 max-w-[44ch] text-sm text-muted lg:text-base">
+        Pick a category, choose your size and flavour, and we bake it fresh for
+        your date.
+      </p>
+      <div class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
+        {
+          tiles.map((t) => (
+            <CategoryTile
+              href={"/shop/" + t.id}
+              label={t.label}
+              tint={t.tint}
+              image={t.image}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- All treats -->
+  <section
+    class="px-4 pb-16 lg:px-10 lg:pb-24"
+    aria-labelledby="all-treats-heading"
+  >
+    <div class="mx-auto max-w-290">
+      <ShopList
+        products={products}
+        title="All treats"
+        headingId="all-treats-heading"
+      />
+    </div>
+  </section>
+
+  <!-- Custom cake band -->
+  <section class="bg-blush px-4 py-14 lg:px-10 lg:py-20">
+    <div
+      class="mx-auto grid max-w-290 items-center gap-8 lg:grid-cols-[1.2fr_auto] lg:gap-16"
+    >
+      <div>
+        <h2 class="max-w-[20ch] text-[30px] lg:text-[44px]">
+          Have a design in mind? Tell us about your cake
+        </h2>
+        <p class="mt-4 max-w-[48ch] text-muted">
+          Share the occasion, size and date. We reply on WhatsApp with a quote
+          and sketch ideas, usually within a few hours.
+        </p>
+      </div>
+      <div>
+        <Button href="/custom-cakes" variant="gold">Start a custom cake</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delivery summary -->
+  <section
+    class="px-4 py-14 lg:px-10 lg:py-20"
+    aria-labelledby="delivery-heading"
+  >
+    <div class="mx-auto max-w-290">
+      <h2 id="delivery-heading" class="text-[30px] lg:text-[40px]">
+        Delivery and pickup
+      </h2>
+      <div class="mt-8 grid gap-10 md:grid-cols-2">
+        <div>
+          <h3 class="text-xl">Delivery fees</h3>
+          <ul class="mt-4 grid gap-3 text-sm">
+            {
+              ZONES.map((z) => (
+                <li class="flex justify-between gap-4 border-b border-line pb-3">
+                  <span>{z.name}</span>
+                  <span class="whitespace-nowrap font-medium">
+                    KES {z.fee.toLocaleString("en-KE")}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl">How much notice we need</h3>
+          <ul class="mt-4 grid gap-3 text-sm">
+            {
+              NOTICE.map((n) => (
+                <li class="flex justify-between gap-4 border-b border-line pb-3">
+                  <span>{n.label}</span>
+                  <span class="whitespace-nowrap font-medium">{n.time}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href="/delivery"
+            class="mt-5 inline-block text-sm font-medium text-btn hover:underline"
+          >
+            Full delivery and pickup details
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section
+    class="px-4 pb-16 lg:px-10 lg:pb-24"
+    aria-labelledby="reviews-heading"
+  >
+    <div class="mx-auto max-w-290">
+      <h2 id="reviews-heading" class="text-[30px] lg:text-[40px]">
+        Kind words from our customers
+      </h2>
+      <div class="mt-8 grid gap-8 md:grid-cols-3">
+        {
+          reviews.map((r) => (
+            <blockquote class="border-l-[3px] border-gold pl-4">
+              <p class="font-serif text-xl italic leading-snug">{r.quote}</p>
+              <footer class="mt-3 text-sm text-muted">{r.who}</footer>
+            </blockquote>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

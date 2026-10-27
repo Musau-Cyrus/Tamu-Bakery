@@ -1,0 +1,15 @@
+{
+    "name":"Classic Birthday Cake",
+    "category":"birthday",
+    "description":"Soft sponge layered with buttercream, finished with your messsage.",
+    "leadDays":2,
+    "deposit":false,
+    "flavours":["Vanilla", "Chocolate", "Red velvet", "Black forest", "Lemon"],
+    "sizes":[
+        {"label":"1kg, serves 10", "price":3500},
+        {"label":"2kg, serves 10", "price":6500},
+        {"label":"3kg, serves 10", "price":9200}
+    ],
+    "note":{"label":"Message on the cake(optional)", "maxLength":40, "placeholder":"Happy birthday!"},
+    "image":"/assets/products/classic-birthday-cake.jpeg"
+}

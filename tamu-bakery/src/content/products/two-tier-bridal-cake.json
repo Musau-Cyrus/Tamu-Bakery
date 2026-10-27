@@ -1,0 +1,14 @@
+{
+    "name":"Two Tier Bridal Cake",
+    "category":"bridal",
+    "description":"Two elegant tiers with hand-piped florals in your wedding colours.",
+    "leadDays":7,
+    "deposit":true,
+    "flavours":["Vanilla", "Chocolate", "Red velvet", "Traditional Fruit Cake"],
+    "sizes":[
+        {"label":"serves 50", "price":24000},
+        {"label":"serves 80", "price":34000}
+    ],
+    "note":{"label":"Message on the cake(optional)", "maxLength":40, "placeholder":"Blush and Gold, White roses, names"},
+    "image":"/assets/products/two-tier-bridal-cake.jpeg"
+}

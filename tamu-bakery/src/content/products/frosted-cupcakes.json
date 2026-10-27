@@ -1,0 +1,14 @@
+{
+    "name":"Frosted Cup Cakes",
+    "category":"cupcakes",
+    "description":"Light cupcakes with swirls of butter cream. Great for parties and offices.",
+    "leadDays":1,
+    "deposit":false,
+    "flavours":["Vanilla", "Chocolate", "Red velvet", "Mixed Box"],
+    "sizes":[
+        {"label":"Box of 6", "price":1200},
+        {"label":"Box of 12", "price":2300},
+        {"label":"Box of 24", "price":4400}
+    ],
+    "image":"/assets/products/frosted-cupcakes.jpeg"
+}

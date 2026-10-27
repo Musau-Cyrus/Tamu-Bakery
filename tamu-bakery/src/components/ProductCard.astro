@@ -2,19 +2,7 @@
 import { Image } from "astro:assets";
 import ArchPanel from "./ArchPanel.astro";
 import Button from "./Button.astro";
-
-interface Product {
-  id: string;
-  data: {
-    name: string;
-    description: string;
-    category: "birthday" | "bridal" | "cupcakes" | "pastries" | "bread";
-    image: string;
-    leadDays: number;
-    soldOut: boolean;
-    sizes: Array<{ price: number }>;
-  };
-}
+import type { Product } from "../lib/products";
 
 interface Props {
   product: Product;
@@ -41,7 +29,11 @@ const tints = {
 } as const;
 ---
 
-<article class="flex flex-col gap-3">
+<article
+  class="flex flex-col gap-3"
+  data-product-card={product.id}
+  data-category={p.category}
+>
   <a href={href} class="block" aria-label={"Choose options for " + p.name}>
     <ArchPanel tint={tints[p.category]}>
       <Image
@@ -80,7 +72,11 @@ const tints = {
       p.soldOut ? (
         <span class="text-sm text-muted">Sold out</span>
       ) : (
-        <Button href={href} size="sm">
+        <Button
+          size="sm"
+          class="h-10 w-full whitespace-nowrap sm:w-auto sm:min-w-33"
+          data-open-product={product.id}
+        >
           Choose options
         </Button>
       )

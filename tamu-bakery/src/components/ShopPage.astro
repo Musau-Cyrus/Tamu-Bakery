@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ShopList from "./ShopList.astro";
+import { CATEGORIES, getProducts, type CategoryId } from "../lib/products";
+
+interface Props {
+  category?: CategoryId;
+}
+
+const { category } = Astro.props;
+const products = await getProducts();
+const categoryInfo = category
+  ? CATEGORIES.find((item) => item.id === category)
+  : undefined;
+const label = categoryInfo?.label ?? "All treats";
+const description = categoryInfo
+  ? `Order ${categoryInfo.label.toLowerCase()} online and pay with M-Pesa.`
+  : "Birthday cakes, bridal cakes, cupcakes, pastries and bread.";
+---
+
+<BaseLayout title={`${label} | Tamu Bakery`} description={description}>
+  <div class="mx-auto max-w-290 px-4 py-10 lg:px-10 lg:py-16">
+    <ShopList
+      products={products}
+      active={category}
+      title={label}
+      headingLevel="h1"
+    />
+  </div>
+</BaseLayout>

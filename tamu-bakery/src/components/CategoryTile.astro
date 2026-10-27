@@ -1,0 +1,42 @@
+---
+// src/components/CategoryTile.astro
+// A big tappable tile for "Shop by occasion": arch picture with the category name underneath.
+//
+// Usage:
+//   <CategoryTile href="/shop/birthday" label="Birthday cakes" tint="pink" image={coverImage} />
+
+import { Image } from "astro:assets";
+import ArchPanel from "./ArchPanel.astro";
+
+interface Props {
+  href: string;
+  label: string;
+  image?: string;
+  tint?: "pink" | "choc" | "peach" | "butter" | "cream" | "blush";
+}
+
+const { href, label, image, tint = "pink" } = Astro.props;
+---
+
+<!-- The image alt is empty on purpose: the label right below already names the category -->
+<a href={href} class="group grid justify-items-center gap-2.5 text-center">
+  <ArchPanel
+    tint={tint}
+    class="w-full transition-transform duration-200 group-hover:-translate-y-1"
+  >
+    {
+      image && (
+        <Image
+          src={image}
+          alt=""
+          width={736}
+          height={1308}
+          widths={[240, 400]}
+          sizes="(min-width: 1024px) 25vw, 50vw"
+          class="h-full w-full object-cover"
+        />
+      )
+    }
+  </ArchPanel>
+  <span class="font-serif text-lg font-semibold">{label}</span>
+</a>

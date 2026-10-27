@@ -1,0 +1,72 @@
+---
+// src/pages/custom-cakes.astro  ->  /custom-cakes
+// The form builds a WhatsApp message and opens the chat. (Part 10 expands on this.)
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Field from "../components/Field.astro";
+import Button from "../components/Button.astro";
+---
+
+<BaseLayout title="Custom cakes | Tamu Bakery" description="Tell us about the cake you have in mind and we will quote you on WhatsApp.">
+  <div class="mx-auto grid max-w-[1160px] gap-10 px-4 py-10 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-16">
+    <div>
+      <h1 class="max-w-[16ch] text-[34px] lg:text-[48px]">Have a design in mind? Tell us about your cake</h1>
+      <p class="mt-4 max-w-[44ch] text-muted">
+        Share the occasion, size and date. We reply on WhatsApp with a quote and sketch ideas,
+        usually within a few hours.
+      </p>
+      <ol class="mt-6 grid max-w-[44ch] list-decimal gap-2 pl-5 text-sm">
+        <li>Fill in the details on this form.</li>
+        <li>Send them on WhatsApp. The chat opens with your details filled in.</li>
+        <li>Attach your reference photo in the chat.</li>
+      </ol>
+    </div>
+
+    <form id="custom-form" class="grid gap-4 rounded-3xl bg-blush p-5 sm:p-8">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <Field label="Your name" name="name" required autocomplete="name" />
+        <Field label="Occasion" name="occasion" as="select">
+          <option>Birthday</option>
+          <option>Wedding or bridal</option>
+          <option>Anniversary</option>
+          <option>Baby shower</option>
+          <option>Graduation</option>
+          <option>Corporate event</option>
+          <option>Other</option>
+        </Field>
+        <Field label="Number of guests" name="guests" type="number" min="1" inputmode="numeric" placeholder="e.g. 30" required />
+        <Field label="Date needed" name="date" id="date" type="date" required />
+      </div>
+      <Field label="Flavour" name="flavour" placeholder="e.g. Vanilla with strawberry filling" />
+      <Field label="Design details" name="notes" as="textarea" rows={4} placeholder="Colours, theme, message on the cake, budget" />
+      <Button type="submit" variant="gold" full>Send on WhatsApp</Button>
+    </form>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#custom-form")!;
+  const date = document.querySelector<HTMLInputElement>("#date")!;
+
+  // The earliest date is 2 days from today. Set it here, in the browser,
+  // because this page is built once and would otherwise keep an old date.
+  const min = new Date();
+  min.setDate(min.getDate() + 2);
+  date.min =
+    min.getFullYear() + "-" + String(min.getMonth() + 1).padStart(2, "0") + "-" + String(min.getDate()).padStart(2, "0");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(form);
+    const message =
+      "Hello Tamu Bakery, I would like a custom cake.\n\n" +
+      "Name: " + f.get("name") + "\n" +
+      "Occasion: " + f.get("occasion") + "\n" +
+      "Guests: " + f.get("guests") + "\n" +
+      "Date needed: " + f.get("date") + "\n" +
+      "Flavour: " + (f.get("flavour") || "Not sure yet") + "\n" +
+      "Design details: " + (f.get("notes") || "I will send a photo");
+    const url = "https://wa.me/" + import.meta.env.PUBLIC_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank", "noopener");
+  });
+</script>

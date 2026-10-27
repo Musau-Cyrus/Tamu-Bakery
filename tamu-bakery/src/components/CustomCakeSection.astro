@@ -1,0 +1,79 @@
+---
+// src/components/CustomCakeSection.astro
+// "Have a design in mind?" band with the custom cake form.
+// Submitting opens WhatsApp with the details already typed in.
+
+import Field from "./Field.astro";
+import Button from "./Button.astro";
+---
+
+<section id="custom" class="bg-blush px-4 py-14 lg:px-10 lg:py-20" aria-labelledby="custom-heading">
+  <div class="mx-auto grid max-w-[1160px] gap-10 lg:grid-cols-2 lg:gap-16">
+    <div>
+      <h2 id="custom-heading" class="max-w-[16ch] text-[30px] lg:text-[44px]">Have a design in mind? Tell us about your cake</h2>
+      <p class="mt-4 max-w-[44ch] text-muted">
+        Share the occasion, size and date. We reply on WhatsApp with a quote and sketch ideas,
+        usually within a few hours.
+      </p>
+      <ol class="mt-6 grid max-w-[44ch] gap-2.5 text-sm">
+        {
+          ["Fill in the details on this form.", "Send them on WhatsApp. The chat opens with your details filled in.", "Attach your reference photo in the chat."].map(
+            (text, i) => (
+              <li class="flex items-center gap-3">
+                <span class="grid h-[26px] w-[26px] shrink-0 place-items-center rounded-full bg-gold text-[13px] font-medium text-ink">{i + 1}</span>
+                {text}
+              </li>
+            )
+          )
+        }
+      </ol>
+    </div>
+
+    <form id="custom-form" class="grid gap-4 rounded-3xl bg-surface p-5 sm:p-8">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <Field label="Your name" name="name" id="cc-name" required autocomplete="name" />
+        <Field label="Occasion" name="occasion" id="cc-occasion" as="select">
+          <option>Birthday</option>
+          <option>Wedding or bridal</option>
+          <option>Anniversary</option>
+          <option>Baby shower</option>
+          <option>Graduation</option>
+          <option>Corporate event</option>
+          <option>Other</option>
+        </Field>
+        <Field label="Number of guests" name="guests" id="cc-guests" type="number" min="1" inputmode="numeric" placeholder="e.g. 30" required />
+        <Field label="Date needed" name="date" id="cc-date" type="date" required />
+      </div>
+      <Field label="Flavour" name="flavour" id="cc-flavour" placeholder="e.g. Vanilla with strawberry filling" />
+      <Field label="Design details" name="notes" id="cc-notes" as="textarea" rows={4} placeholder="Colours, theme, message on the cake, budget" />
+      <Button type="submit" variant="gold" full>Send on WhatsApp</Button>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#custom-form")!;
+  const date = document.querySelector<HTMLInputElement>("#cc-date")!;
+
+  // Earliest date is 2 days from today. It is set here, in the browser, because the
+  // page is built once and would otherwise keep the date from the day it was built.
+  const min = new Date();
+  min.setDate(min.getDate() + 2);
+  date.min =
+    min.getFullYear() + "-" + String(min.getMonth() + 1).padStart(2, "0") + "-" + String(min.getDate()).padStart(2, "0");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(form);
+    const message =
+      "Hello Tamu Bakery, I would like a custom cake.\n\n" +
+      "Name: " + f.get("name") + "\n" +
+      "Occasion: " + f.get("occasion") + "\n" +
+      "Guests: " + f.get("guests") + "\n" +
+      "Date needed: " + f.get("date") + "\n" +
+      "Flavour: " + (f.get("flavour") || "Not sure yet") + "\n" +
+      "Design details: " + (f.get("notes") || "I will send a photo");
+    const url = "https://wa.me/" + import.meta.env.PUBLIC_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank", "noopener");
+  });
+</script>
