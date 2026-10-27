@@ -1,15 +1,13 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import CategoryTile from "../components/CategoryTile.astro";
-import ProductCard from "../components/ProductCard.astro";
+import ShopList from "../components/ShopList.astro";
 import Button from "../components/Button.astro";
-import { CATEGORIES } from "../lib/products";
+import { CATEGORIES, getProducts } from "../lib/products";
 import { ZONES, NOTICE } from "../lib/delivery";
 
-const products = await getCollection("products");
-const featured = products.slice(0, 4);
+const products = await getProducts();
 
 // Four tiles: use the first product's photo in each category as the cover picture
 const tileIds = ["birthday", "bridal", "cupcakes", "pastries"];
@@ -68,25 +66,17 @@ const reviews = [
     </div>
   </section>
 
-  <!-- Featured products -->
+  <!-- All treats -->
   <section
     class="px-4 pb-16 lg:px-10 lg:pb-24"
-    aria-labelledby="featured-heading"
+    aria-labelledby="all-treats-heading"
   >
     <div class="mx-auto max-w-290">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <h2 id="featured-heading" class="text-[30px] lg:text-[40px]">
-          Popular right now
-        </h2>
-        <a href="/shop" class="text-sm font-medium text-btn hover:underline"
-          >See all treats</a
-        >
-      </div>
-      <div
-        class="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6"
-      >
-        {featured.map((p) => <ProductCard product={p} />)}
-      </div>
+      <ShopList
+        products={products}
+        title="All treats"
+        headingId="all-treats-heading"
+      />
     </div>
   </section>
 

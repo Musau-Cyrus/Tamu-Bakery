@@ -1,48 +1,49 @@
 ---
 interface Props {
-    href? : string;
-    variant?:"primary" | "ghost" | "gold";
-    size?: "md" | "sm";
-    type? : "button" | "submit";
-    full?: boolean;
-    class? : string;
-    [key: string]: any;
+  href?: string;
+  variant?: "primary" | "ghost" | "gold";
+  size?: "md" | "sm";
+  type?: "button" | "submit";
+  full?: boolean;
+  class?: string;
+  [key: string]: any;
 }
 
 const {
-    href,
-    variant= "primary",
-    size = "md",
-    type = "button",
-    full = false,
-    class: extra,
-    ...rest
+  href,
+  variant = "primary",
+  size = "md",
+  type = "button",
+  full = false,
+  class: extra,
+  ...rest
 } = Astro.props;
 
-const base = "inline-flex item-center justify-center rounded-full font-medium transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-55";
+const base =
+  "inline-flex items-center justify-center rounded-full font-medium transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-55";
 
 const sizes = {
-    md: "px-6 py-3 text-[15px]",
-    sm: "px-4 py-2 text-sm"
+  md: "px-6 py-3 text-[15px]",
+  sm: "px-4 py-2 text-sm",
 };
 
 const variants = {
-    primary:  "bg-btn text-white hover:brightness-110",
-    ghost: "border-[1.5px] border-ink text-ink hover:bg-ink/5",
-    gold: "bg-gold text-ink hover:brightness-105",
+  primary: "bg-btn text-white hover:brightness-110",
+  ghost: "border-[1.5px] border-ink text-ink hover:bg-ink/5",
+  gold: "bg-gold text-ink hover:brightness-105",
 };
 
 const classes = [base, sizes[size], variants[variant], full && "w-full", extra];
 ---
 
 {
-    href ? (
-        <a href={href} class:list={classes} {...rest}>
-            <slot/>
-        </a>
-    ): (
-        <button type={type} class:list={classes} {...rest}>
-            <slot/>
-        </button>
-    )
+  href ? (
+    <a href={href} class:list={classes} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class:list={classes} {...rest}>
+      <slot />
+    </button>
+  )
 }

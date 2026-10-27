@@ -1,0 +1,18 @@
+---
+import ShopPage from "../components/ShopPage.astro";
+import { CATEGORIES, type CategoryId } from "../lib/products";
+
+export async function getStaticPaths() {
+  return [
+    { params: { slug: "shop" }, props: { category: undefined } },
+    ...CATEGORIES.map((category) => ({
+      params: { slug: `shop/${category.id}` },
+      props: { category: category.id as CategoryId },
+    })),
+  ];
+}
+
+const { category } = Astro.props;
+---
+
+<ShopPage category={category} />

@@ -9,13 +9,8 @@ import ArchPanel from "../../components/ArchPanel.astro";
 import Button from "../../components/Button.astro";
 import Field from "../../components/Field.astro";
 import Quantity from "../../components/Quantity.astro";
-import {
-  CATEGORIES,
-  kes,
-  leadText,
-  tintFor,
-  type Product,
-} from "../../lib/products";
+import { CATEGORIES, tintFor, type Product } from "../../lib/products";
+import { kes, leadText } from "../../lib/format";
 
 export async function getStaticPaths() {
   const products = await getCollection("products");

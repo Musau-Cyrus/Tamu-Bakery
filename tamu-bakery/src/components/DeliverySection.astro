@@ -1,17 +1,19 @@
 ---
-// src/pages/delivery.astro  ->  /delivery
-import BaseLayout from "../layouts/BaseLayout.astro";
+// src/components/DeliverySection.astro
+// Delivery fees, pickup details and how much notice each kind of order needs.
+// The numbers come from src/lib/delivery.ts, so you only edit them in one place.
+
 import { ZONES, SLOTS, NOTICE, PICKUP } from "../lib/delivery";
-import { kes } from "../lib/products";
+import { kes } from "../lib/format";
 ---
 
-<BaseLayout title="Delivery and pickup | Tamu Bakery" description="Delivery fees, pickup details and how much notice we need.">
-  <div class="mx-auto max-w-[1160px] px-4 py-10 lg:px-10 lg:py-16">
-    <h1 class="text-[34px] lg:text-[48px]">Delivery and pickup</h1>
+<section id="delivery" class="px-4 py-14 lg:px-10 lg:py-20" aria-labelledby="delivery-heading">
+  <div class="mx-auto max-w-[1160px]">
+    <h2 id="delivery-heading" class="text-[30px] lg:text-[40px]">Delivery and pickup</h2>
 
-    <div class="mt-10 grid gap-12 md:grid-cols-3 md:gap-10">
-      <section aria-labelledby="fees">
-        <h2 id="fees" class="text-2xl">Delivery fees</h2>
+    <div class="mt-8 grid gap-10 md:grid-cols-3 md:gap-10">
+      <div>
+        <h3 class="text-xl">Delivery fees</h3>
         <ul class="mt-4 grid gap-3 text-sm">
           {
             ZONES.map((z) => (
@@ -22,22 +24,22 @@ import { kes } from "../lib/products";
             ))
           }
         </ul>
-        <h3 class="mt-8 text-lg">Delivery time slots</h3>
-        <ul class="mt-3 grid gap-1.5 text-sm text-muted">
+        <p class="mt-5 text-sm font-medium">Delivery time slots</p>
+        <ul class="mt-2 grid gap-1 text-sm text-muted">
           {SLOTS.map((s) => <li>{s}</li>)}
         </ul>
-      </section>
+      </div>
 
-      <section aria-labelledby="pickup">
-        <h2 id="pickup" class="text-2xl">Pickup</h2>
+      <div>
+        <h3 class="text-xl">Pickup</h3>
         <p class="mt-4 text-sm text-muted">Collect from our shop at <strong class="text-ink">{PICKUP.address}</strong>.</p>
-        <ul class="mt-3 grid gap-1.5 text-sm text-muted">
+        <ul class="mt-3 grid gap-1 text-sm text-muted">
           {PICKUP.hours.map((h) => <li>{h}</li>)}
         </ul>
-      </section>
+      </div>
 
-      <section aria-labelledby="notice">
-        <h2 id="notice" class="text-2xl">How much notice we need</h2>
+      <div>
+        <h3 class="text-xl">How much notice we need</h3>
         <ul class="mt-4 grid gap-3 text-sm">
           {
             NOTICE.map((n) => (
@@ -48,7 +50,7 @@ import { kes } from "../lib/products";
             ))
           }
         </ul>
-      </section>
+      </div>
     </div>
   </div>
-</BaseLayout>
+</section>

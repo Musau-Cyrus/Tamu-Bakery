@@ -1,0 +1,12 @@
+---
+// src/components/CatalogData.astro
+// Puts the product details on the page as JSON so the options popup and the cart
+// (which run in the browser) know the names, sizes and prices.
+import { getProducts, toCatalog } from "../lib/products";
+
+const catalog = toCatalog(await getProducts());
+// "<" is escaped so product text can never end the script tag early
+const json = JSON.stringify(catalog).replace(/</g, "\\u003c");
+---
+
+<script is:inline type="application/json" id="catalog-data" set:html={json}></script>
