@@ -1,8 +1,3 @@
-// src/lib/delivery.ts
-// Delivery zones, time slots and notice times in one place.
-// The delivery page uses them now; the checkout (Part 6) will import the same lists.
-// These are sample values. Replace them with the bakery's real ones.
-
 export const ZONES = [
   { id: "central", name: "Nairobi central and Westlands", fee: 350 },
   { id: "greater", name: "Greater Nairobi (Kasarani, Rongai, Kitengela)", fee: 700 },

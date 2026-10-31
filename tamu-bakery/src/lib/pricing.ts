@@ -1,4 +1,3 @@
-// src/lib/pricing.ts
 import { ZONES } from "./delivery";
 
 export const DEPOSIT_RATE = 0.5; // bridal cakes: share paid now

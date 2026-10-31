@@ -1,4 +1,3 @@
-// src/lib/cart.ts
 import { persistentAtom } from "@nanostores/persistent";
 
 export type CartItem = {

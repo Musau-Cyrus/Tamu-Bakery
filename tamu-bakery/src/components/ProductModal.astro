@@ -1,10 +1,4 @@
 ---
-// src/components/ProductModal.astro
-// The "Choose options" popup.
-//   Phones: a sheet that slides up from the bottom.
-//   Tablets and desktop: a two-column box in the middle (picture left, options right).
-// Any element with data-open-product="<product id>" opens it (see ProductCard.astro).
-// The content is filled in by the script below from the data in CatalogData.astro.
 ---
 
 <dialog
@@ -14,20 +8,47 @@
 >
   <div class="flex max-h-[92dvh] flex-col md:max-h-[85dvh]">
     <!-- Phone header -->
-    <div class="flex shrink-0 items-center justify-between border-b border-line px-5 py-3.5 md:hidden">
+    <div
+      class="flex shrink-0 items-center justify-between border-b border-line px-5 py-3.5 md:hidden"
+    >
       <span class="font-serif text-[22px] font-semibold">Choose options</span>
-      <button type="button" data-close aria-label="Close" class="grid h-10 w-10 place-items-center rounded-full border-[1.5px] border-line bg-surface">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      <button
+        type="button"
+        data-close
+        aria-label="Close"
+        class="grid h-10 w-10 place-items-center rounded-full border-[1.5px] border-line bg-surface"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg
+        >
       </button>
     </div>
 
     <div class="overflow-y-auto md:flex md:overflow-hidden">
       <!-- Picture -->
-      <div class="px-5 pt-4 md:flex md:w-[340px] md:shrink-0 md:items-center md:justify-center md:bg-blush md:px-10 md:py-12">
-        <div id="pd-art" class="h-[150px] w-full overflow-hidden rounded-t-[75px] rounded-b-2xl md:h-[380px] md:w-[260px] md:rounded-t-[130px]"></div>
+      <div
+        class="px-5 pt-4 md:flex md:w-[340px] md:shrink-0 md:items-center md:justify-center md:bg-blush md:px-10 md:py-12"
+      >
+        <div
+          id="pd-art"
+          class="h-37.5 w-full overflow-hidden border-2 border-btn md:h-95 md:w-65"
+          style="border-radius: 50% 50% 5px 5px / 40% 40% 5px 5px;"
+        >
+        </div>
       </div>
       <!-- Options (filled in by the script) -->
-      <div id="pd-info" class="px-5 pb-6 pt-4 md:flex-1 md:overflow-y-auto md:px-8 md:py-8"></div>
+      <div
+        id="pd-info"
+        class="px-5 pb-6 pt-4 md:flex-1 md:overflow-y-auto md:px-8 md:py-8"
+      >
+      </div>
     </div>
   </div>
 </dialog>
@@ -69,11 +90,14 @@
     // Picture: reuse the photo that is already on the product card
     art.classList.remove(...ALL_TINTS);
     art.classList.add(tintClass[p.category] || "bg-tint-pink");
-    const photo = document.querySelector<HTMLImageElement>('[data-product-card="' + p.id + '"] img');
+    const photo = document.querySelector<HTMLImageElement>(
+      '[data-product-card="' + p.id + '"] img',
+    );
     if (photo) {
       const img = photo.cloneNode(true) as HTMLImageElement;
       img.removeAttribute("class");
       img.className = "h-full w-full object-cover";
+      img.style.borderRadius = "50% 50% 2px 2px / 40% 40% 2px 2px";
       img.sizes = "(min-width: 768px) 260px, 100vw";
       art.replaceChildren(img);
     } else {
@@ -84,43 +108,77 @@
       .map(
         (s, i) =>
           '<label class="relative cursor-pointer">' +
-          '<input type="radio" name="pd-size" value="' + i + '"' + (i === 0 ? " checked" : "") + ' class="peer sr-only" />' +
+          '<input type="radio" name="pd-size" value="' +
+          i +
+          '"' +
+          (i === 0 ? " checked" : "") +
+          ' class="peer sr-only" />' +
           '<span class="grid rounded-2xl border-[1.5px] border-line bg-surface px-3.5 py-2 text-xs leading-snug peer-checked:border-btn peer-checked:bg-tint-pink peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-gold">' +
-          esc(s.label) + '<b class="text-[13px] font-semibold text-btn">' + kes(s.price) + "</b></span></label>"
+          esc(s.label) +
+          '<b class="text-[13px] font-semibold text-btn">' +
+          kes(s.price) +
+          "</b></span></label>",
       )
       .join("");
 
     const noteField = p.note
-      ? '<label class="grid gap-1.5"><span class="text-[13px] font-medium">' + esc(p.note.label) + "</span>" +
-        '<input id="pd-note" type="text" maxlength="' + p.note.maxLength + '" placeholder="' + esc(p.note.placeholder || "") + '" class="' + FIELD + '" /></label>'
+      ? '<label class="grid gap-1.5"><span class="text-[13px] font-medium">' +
+        esc(p.note.label) +
+        "</span>" +
+        '<input id="pd-note" type="text" maxlength="' +
+        p.note.maxLength +
+        '" placeholder="' +
+        esc(p.note.placeholder || "") +
+        '" class="' +
+        FIELD +
+        '" /></label>'
       : "";
 
     const flavourField =
-      '<label class="grid gap-1.5"><span class="text-[13px] font-medium">' + esc(p.optionLabel) + "</span>" +
-      '<select id="pd-flavour" class="' + FIELD + '">' +
-      p.flavours.map((f) => '<option value="' + esc(f) + '">' + esc(f) + "</option>").join("") +
+      '<label class="grid gap-1.5"><span class="text-[13px] font-medium">' +
+      esc(p.optionLabel) +
+      "</span>" +
+      '<select id="pd-flavour" class="' +
+      FIELD +
+      '">' +
+      p.flavours
+        .map((f) => '<option value="' + esc(f) + '">' + esc(f) + "</option>")
+        .join("") +
       "</select></label>";
 
     info.innerHTML =
       '<div class="flex items-start justify-between gap-3">' +
-        "<div>" +
-          '<h2 id="pd-title" class="text-[26px] leading-tight md:text-[30px]">' + esc(p.name) + "</h2>" +
-          '<p class="mt-1.5 text-sm text-muted">' + esc(p.description) + "</p>" +
-        "</div>" +
-        '<button type="button" data-close aria-label="Close" class="hidden h-10 w-10 shrink-0 place-items-center rounded-full border-[1.5px] border-line bg-surface md:grid">' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>' +
-        "</button>" +
+      "<div>" +
+      '<h2 id="pd-title" class="text-[26px] leading-tight md:text-[30px]">' +
+      esc(p.name) +
+      "</h2>" +
+      '<p class="mt-1.5 text-sm text-muted">' +
+      esc(p.description) +
+      "</p>" +
       "</div>" +
-      '<fieldset class="mt-5 grid gap-2"><legend class="text-[13px] font-medium">Size</legend><div class="flex flex-wrap gap-2">' + sizes + "</div></fieldset>" +
-      '<div class="mt-4 grid gap-4 md:grid-cols-2">' + flavourField + noteField + "</div>" +
-      '<p class="mt-4 text-sm text-muted">' + leadText(p.leadDays) + "." + (p.deposit ? " A 50% deposit secures your date." : "") + "</p>" +
+      '<button type="button" data-close aria-label="Close" class="hidden h-10 w-10 shrink-0 place-items-center rounded-full border-[1.5px] border-line bg-surface md:grid">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>' +
+      "</button>" +
+      "</div>" +
+      '<fieldset class="mt-5 grid gap-2"><legend class="text-[13px] font-medium">Size</legend><div class="flex flex-wrap gap-2">' +
+      sizes +
+      "</div></fieldset>" +
+      '<div class="mt-4 grid gap-4 md:grid-cols-2">' +
+      flavourField +
+      noteField +
+      "</div>" +
+      '<p class="mt-4 text-sm text-muted">' +
+      leadText(p.leadDays) +
+      "." +
+      (p.deposit ? " A 50% deposit secures your date." : "") +
+      "</p>" +
       '<div class="mt-5 flex items-center gap-3.5">' +
-        '<div class="inline-flex items-center rounded-full border-[1.5px] border-line bg-surface px-0.5">' +
-          '<button type="button" id="pd-minus" aria-label="Decrease quantity" class="grid h-[34px] w-[34px] place-items-center rounded-full text-lg leading-none hover:bg-blush">&minus;</button>' +
-          '<output id="pd-qty" aria-live="polite" class="min-w-7 text-center text-sm font-medium">1</output>' +
-          '<button type="button" id="pd-plus" aria-label="Increase quantity" class="grid h-[34px] w-[34px] place-items-center rounded-full text-lg leading-none hover:bg-blush">+</button>' +
-        "</div>" +
-        '<button type="button" id="pd-add" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-btn px-4 py-3 text-[15px] font-medium text-white transition hover:brightness-110 active:scale-95 sm:px-6">Add to cart <span id="pd-total" class="ml-1.5"></span></button>' +
+      '<div class="inline-flex items-center rounded-full border-[1.5px] border-line bg-surface px-0.5">' +
+      '<button type="button" id="pd-minus" aria-label="Decrease quantity" class="grid h-[34px] w-[34px] place-items-center rounded-full text-lg leading-none hover:bg-blush">&minus;</button>' +
+      '<output id="pd-qty" aria-live="polite" class="min-w-7 text-center text-sm font-medium">1</output>' +
+      '<button type="button" id="pd-plus" aria-label="Increase quantity" class="grid h-[34px] w-[34px] place-items-center rounded-full text-lg leading-none hover:bg-blush">+</button>' +
+      "</div>" +
+      '<button type="button" id="pd-add" class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-full bg-btn px-4 py-3 text-[15px] font-medium text-white transition hover:brightness-110 active:scale-95 sm:px-6">Add to cart <span id="pd-total" class="ml-1.5"></span></button>' +
       "</div>";
 
     update();
@@ -135,7 +193,8 @@
   // Show the live price on the button: "Add to cart (KES 6,500)"
   function update() {
     info.querySelector("#pd-qty")!.textContent = String(qty);
-    info.querySelector("#pd-total")!.textContent = "(" + kes(product.sizes[sizeIndex].price * qty) + ")";
+    info.querySelector("#pd-total")!.textContent =
+      "(" + kes(product.sizes[sizeIndex].price * qty) + ")";
   }
 
   info.addEventListener("change", (e) => {
@@ -155,8 +214,12 @@
       qty = Math.min(20, qty + 1);
       update();
     } else if (t.closest("#pd-add")) {
-      const flavour = (info.querySelector("#pd-flavour") as HTMLSelectElement).value;
-      const note = (info.querySelector("#pd-note") as HTMLInputElement | null)?.value.trim() ?? "";
+      const flavour = (info.querySelector("#pd-flavour") as HTMLSelectElement)
+        .value;
+      const note =
+        (
+          info.querySelector("#pd-note") as HTMLInputElement | null
+        )?.value.trim() ?? "";
       addItem({ productId: product.id, sizeIndex, flavour, note, qty });
       closeDialog();
       toast("Added to your cart");

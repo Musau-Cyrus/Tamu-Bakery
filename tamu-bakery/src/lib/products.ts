@@ -1,7 +1,3 @@
-// src/lib/products.ts
-// SERVER-ONLY helpers (they read the content collection while the site is being built).
-// For code that runs in the browser, use format.ts and catalog.ts instead.
-
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export type Product = CollectionEntry<"products">;

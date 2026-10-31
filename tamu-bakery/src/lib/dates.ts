@@ -1,4 +1,3 @@
-// src/lib/dates.ts
 export function addDays(days: number): Date {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
