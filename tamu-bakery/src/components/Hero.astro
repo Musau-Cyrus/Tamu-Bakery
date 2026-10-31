@@ -1,6 +1,4 @@
 ---
-//import Button from "./Button.astro"
-
 const points = [
   "Birthday cakes ready in 2 days",
   "Bridal cakes booked 7 days ahead",
@@ -70,23 +68,16 @@ const points = [
     </div>
 
     <!-- Arch picture -->
-    <div class="relative mx-auto w-[82%] max-w-100 md:w-full">
-      <!-- Gold outline, sitting 14px outside the picture -->
       <div
-        aria-hidden="true"
-        class="pointer-events-none absolute -inset-3.5 rounded-t-[50%/40%] rounded-b-[38px] border-2 border-gold"
-      >
-      </div>
-
-      <!--
-        The arch: 4:5 shape. The top corners use 50% across and 40% down, which makes a
-        perfect half-circle on a 4:5 box. The bottom corners are a fixed 28px.
-      -->
+      style="border-radius: 50% 50% 5px 5px / 40% 40% 5px 5px;"
+      class="relative mx-auto w-[82%] max-w-100 border-2 border-btn bg-surface p-1.5 motion-safe:animate-rise md:w-full"
+    >
       <div
-        class="relative aspect-4/5 overflow-hidden rounded-t-[50%/40%] rounded-b-[28px] bg-blush motion-safe:animate-rise"
+        style="border-radius: 50% 50% 2px 2px / 40% 40% 2px 2px;"
+        class="relative aspect-4/5 overflow-hidden bg-blush"
       >
         <img
-          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85"
+          src="/assets/products/Header-cake.jpeg"
           alt="A tiered bridal cake decorated with pink and white flowers"
           loading="eager"
           fetchpriority="high"

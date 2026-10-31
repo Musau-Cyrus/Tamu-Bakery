@@ -1,11 +1,7 @@
 ---
-// src/components/Footer.astro
-// Deep rose footer: about + M-Pesa badge, visit details, social links, legal bar.
-
 const year = new Date().getFullYear();
 const whatsapp = "https://wa.me/" + import.meta.env.PUBLIC_WHATSAPP_NUMBER;
 
-// Replace these with the bakery's real details and social pages.
 const address = "Your street address, your town";
 const hours = [
   "Mon to Sat 7am to 7pm",
@@ -31,7 +27,7 @@ const legal = [
 ---
 
 <footer class="bg-deep text-white">
-  <div class="mx-auto grid max-w-[1160px] gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-10">
+  <div class="mx-auto grid max-w-290 gap-10 px-4 py-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-10">
     <!-- About -->
     <div>
       <p class="font-serif text-2xl font-semibold">Tamu Bakery</p>
@@ -90,8 +86,8 @@ const legal = [
 
   <!-- Legal bar (extra bottom space on phones so the floating WhatsApp button never covers it) -->
   <div class="border-t border-white/15">
-    <div class="mx-auto flex max-w-[1160px] flex-col gap-3 px-4 pb-24 pt-5 text-xs text-white/75 md:flex-row md:items-center md:justify-between md:pb-5 lg:px-10">
-      <p>&copy; {year} Tamu Bakery. All rights reserved.</p>
+    <div class="mx-auto flex max-w-290 flex-col gap-3 px-4 pb-24 pt-5 text-xs text-white/75 md:flex-row md:items-center md:justify-between md:pb-5 lg:px-10">
+      <p>&copy; {year} CK Crafts  . All rights reserved.</p>
       <ul class="flex flex-wrap gap-x-5 gap-y-1">
         {
           legal.map((l) => (

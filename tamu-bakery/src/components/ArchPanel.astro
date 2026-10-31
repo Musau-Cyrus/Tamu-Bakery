@@ -3,9 +3,9 @@ interface Props {
   tint?: "pink" | "choc" | "peach" | "butter" | "cream" | "blush";
   class?: string;
 }
- 
+
 const { tint = "pink", class: extra } = Astro.props;
- 
+
 // Full class names, so Tailwind can find them
 const tints = {
   pink: "bg-tint-pink",
@@ -15,16 +15,22 @@ const tints = {
   cream: "bg-tint-cream",
   blush: "bg-blush",
 };
- 
-// The box is slightly taller than wide (1 : 1.12). The top corners are 50% across and 45% down,
-// which gives a true half-circle on that shape. The bottom corners are a fixed 18px.
+
 const classes = [
-  "relative flex aspect-[1/1.12] items-end justify-center overflow-hidden rounded-t-[50%/45%] rounded-b-[18px]",
+  "relative aspect-[1/1.12] border-2 border-btn bg-surface p-1.5",
   tints[tint],
   extra,
 ];
 ---
- 
-<div class:list={classes}>
-  <slot />
+
+<div
+  class:list={classes}
+  style="border-radius: 50% 50% 5px 5px / 40% 40% 5px 5px;"
+>
+  <div
+    class="relative flex h-full w-full items-end justify-center overflow-hidden"
+    style="border-radius: 50% 50% 2px 2px / 40% 40% 2px 2px;"
+  >
+    <slot />
+  </div>
 </div>

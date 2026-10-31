@@ -10,7 +10,6 @@ interface Props {
 
 const { product } = Astro.props;
 const p = product.data;
-const href = "/product/" + product.id;
 
 const from = Math.min(...p.sizes.map((size) => size.price));
 const kes = (n: number) => "KES " + n.toLocaleString("en-KE");
@@ -34,7 +33,11 @@ const tints = {
   data-product-card={product.id}
   data-category={p.category}
 >
-  <a href={href} class="block" aria-label={"Choose options for " + p.name}>
+  <a
+    data-open-product={product.id}
+    class="block"
+    aria-label={"Choose options for " + p.name}
+  >
     <ArchPanel tint={tints[p.category]}>
       <Image
         src={p.image}

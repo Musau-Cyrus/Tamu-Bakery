@@ -1,5 +1,3 @@
-// src/lib/ui.ts  (runs in the browser)
-
 // Make text safe to put inside HTML that we build with JavaScript.
 export const esc = (s: string | null | undefined) =>
   (s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);

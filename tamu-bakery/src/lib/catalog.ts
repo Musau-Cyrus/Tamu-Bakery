@@ -1,6 +1,3 @@
-// src/lib/catalog.ts  (runs in the browser)
-// Reads the product data that CatalogData.astro puts on the page.
-
 export type CatalogProduct = {
   id: string;
   name: string;

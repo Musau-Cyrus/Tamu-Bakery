@@ -1,6 +1,6 @@
 ---
-import { Field } from "./Field.astro";
-import ButtonAstroComponent, { Button } from "./Button.astro";
+import Field from "./Field.astro";
+import Button from "./Button.astro";
 import { ZONES, SLOTS, PICKUP } from "../lib/delivery";
 import { kes } from "../lib/format";
 ---
@@ -8,10 +8,11 @@ import { kes } from "../lib/format";
 <dialog
   id="cart-dialog"
   aria-labelledby="cart-title"
-  class="fixed insert-y-0 right-0 left-auto m-0 h-dvh max-h-none w-full max-w-none overflow-hiddenrounded-none bg-surface p-0 text-ink backdrop:bg-ink/55 sm:w-115 sm-rounded-1-3xl"
+  class="fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-full max-w-none overflow-hidden rounded-none bg-surface p-0 text-ink backdrop:bg-ink/55 sm:w-[28.75rem] sm:rounded-l-3xl"
 >
   <div class="flex h-full flex-col">
-    <h2 id="cart-title" class="text-[22px]">Your Cart</h2>
+    <div class="flex items-center justify-between border-b border-line px-5 py-4 sm:px-6">
+      <h2 id="cart-title" class="text-[22px]">Your Cart</h2>
     <button
       type="button"
       data-close
@@ -21,18 +22,18 @@ import { kes } from "../lib/format";
       <svg
         width="16"
         height="16"
-        viewBox=" 0 0 24 24"
+        viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
-        aria-hidden="true"
-        <path
-        d="M6 6112 12M18 6L6 18"></svg><svg></svg>
+        aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
     </button>
-  </div>
+    </div>
 
-  <div class="flex-1 overflow-y-auto pb-[env(safe-area-inset-bottom)]">
+    <div class="flex-1 overflow-y-auto pb-[env(safe-area-inset-bottom)]">
     <!-- 1. Empty Cart -->
     <div
       id="cart-empty"
@@ -40,7 +41,7 @@ import { kes } from "../lib/format";
       class="grid h-full min-h-[60dvh] place-content-center justify-items-center gap-4 px-10 text-center"
     >
       <div
-        class="gridh-24 w-24 place-items-center rounded-full bg-blush text-btn"
+        class="grid h-24 w-24 place-items-center rounded-full bg-blush text-btn"
       >
         <svg
           width="40"
@@ -49,25 +50,28 @@ import { kes } from "../lib/format";
           fill="none"
           stroke="currentColor"
           stroke-width="1.8"
-          stroke-lincap="round"
+          stroke-linecap="round"
           stroke-linejoin="round"
           aria-hidden="true"
         >
-          <path d="M6 6h151-1.5 9h-12z"></path><path d="M6 6 5 3H2"
-          ></path><circle cx="p" cy="20" r="1.5"></circle><circle
+          <path d="M6 6h15l-1.5 9h-12z"></path><path d="M6 6 5 3H2"
+          ></path><circle cx="9" cy="20" r="1.5"></circle><circle
             cx="18"
             cy="20"
             r="1.5"></circle>
         </svg>
-        <div>
+      </div>
+      <div>
           <h3 class="text-[22px]">Your cart is Empty</h3>
           <p class="text-sm text-muted">
             Pick a cake or a box of pasteries to get started!
           </p>
           <Button id="browse-btn"> Browse the shop</Button>
-        </div>
-        <!-- 2. Items and checkout -->
-        <div id="cart-full" hidden class="px-5 py-4 sm:px-6">
+      </div>
+    </div>
+
+    <!-- 2. Items and checkout -->
+    <div id="cart-full" hidden class="px-5 py-4 sm:px-6">
           <ul id="cart-lines" class="grid gap-3.5"></ul>
 
           <form id="checkout" novalidate class="mt-5 grid gap-4">
@@ -185,20 +189,20 @@ import { kes } from "../lib/format";
               is connected.
             </p>
           </form>
-        </div>
+      </div>
 
-        <!-- 3, 4, 5. Waiting, confirmed, failed -->
-        <div
+      <!-- 3, 4, 5. Waiting, confirmed, failed -->
+      <div
           id="cart-status"
           hidden
           class="grid min-h-[60dvh] place-content-center justify-items-center gap-4 px-10 text-center"
         >
-        </div>
       </div>
     </div>
   </div>
+</dialog>
 
-  <script>
+<script>
     import {
       cart,
       changeQty,
@@ -399,10 +403,45 @@ import { kes } from "../lib/format";
     zoneEl.addEventListener("change", () => updateSummary(getLines()));
     phoneEl.addEventListener("input", () => phoneEl.setCustomValidity(""));
 
-    // ---- Payment (DEMO) ----
-    // Part 9 replaces this with real calls: POST /api/orders, then POST /api/mpesa/stk-push,
-    // then poll GET /api/mpesa/status until the order is paid or failed.
-    // To see the "payment failed" screen in the demo, add ?pay=fail to the page address.
+    async function saveOrder(
+      ref: string,
+      phone: string,
+      lines: Line[],
+      price: ReturnType<typeof priceCart>,
+    ) {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ref,
+          customerName: $<HTMLInputElement>("#c-name").value,
+          phone,
+          fulfilment: method(),
+          zone: method() === "delivery" ? zoneEl.value : null,
+          address: method() === "delivery" ? addressEl.value.trim() : null,
+          deliveryDate: dateEl.value,
+          timeSlot: $<HTMLSelectElement>("#c-slot").value,
+          subtotal: price.subtotal,
+          deliveryFee: price.deliveryFee,
+          total: price.total,
+          amountDue: price.dueNow,
+          items: lines.map((line) => ({
+            productId: line.product.id,
+            name: line.product.name,
+            sizeLabel: line.size.label,
+            flavour: line.item.flavour,
+            note: line.item.note || null,
+            qty: line.item.qty,
+            unitPrice: line.size.price,
+          })),
+        }),
+      });
+      const result = (await response.json()) as { order?: { ref: string }; error?: string };
+      if (!response.ok || !result.order) throw new Error(result.error || "Could not save order");
+      return result.order;
+    }
+
+    // Payment remains a demo until the Daraja API is connected. The order is saved first.
     async function requestPayment(_: { phone: string; amount: number }) {
       await new Promise((r) => setTimeout(r, 3200));
       if (new URLSearchParams(location.search).get("pay") === "fail")
@@ -450,7 +489,9 @@ import { kes } from "../lib/format";
           ". Enter your M-Pesa PIN to pay.</p>",
       );
 
+      let savedOrder: { ref: string } | null = null;
       try {
+        savedOrder = await saveOrder(ref, phone, lines, price);
         await requestPayment({ phone, amount: price.dueNow });
         showStatus(
           "done",
@@ -460,7 +501,7 @@ import { kes } from "../lib/format";
             "<p>Thank you, " +
             esc(name) +
             ". Your order number is <strong>" +
-            ref +
+            savedOrder.ref +
             "</strong>.</p>" +
             '<p class="text-sm text-muted">' +
             how +
@@ -473,12 +514,17 @@ import { kes } from "../lib/format";
         );
         clearCart();
       } catch {
+        const savedMessage = savedOrder
+          ? "Your order has been saved and is awaiting payment. You can try again, or contact us on WhatsApp."
+          : "We could not save your order. Please try again or contact us on WhatsApp.";
         showStatus(
           "failed",
           '<div class="grid h-16 w-16 place-items-center rounded-full bg-red-600 text-white" aria-hidden="true">' +
             '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg></div>' +
             '<h3 class="text-[28px]">Payment not completed</h3>' +
-            '<p class="text-muted">We did not receive your payment. You can try again, or contact us on WhatsApp.</p>' +
+            '<p class="text-muted">' +
+            savedMessage +
+            "</p>" +
             '<button type="button" data-retry class="mt-2 inline-flex items-center justify-center rounded-full bg-btn px-6 py-3 text-[15px] font-medium text-white">Try again</button>',
         );
       }
@@ -523,4 +569,3 @@ import { kes } from "../lib/format";
     cart.subscribe(() => render());
     syncFulfilment();
   </script>
-</dialog>

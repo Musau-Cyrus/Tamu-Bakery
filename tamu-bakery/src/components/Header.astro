@@ -1,12 +1,6 @@
 ---
 import "../styles/global.css";
 
-interface Props {
-  cartCount?: number;
-}
-
-const { cartCount = 2 } = Astro.props;
-
 const navLinks = [
   { label: "Shop", href: "/shop" },
   { label: "Custom cakes", href: "/custom-cakes" },
@@ -54,17 +48,19 @@ const navLinks = [
       <!-- Right controls: Cart and Hamburger -->
       <div class="flex items-center gap-2.5">
         <!-- Cart Pill -->
-        <a
-          href="/cart"
+        <button
+          id="open-cart"
+          type="button"
+          aria-label="Open cart"
           class="flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-line rounded-full text-ink text-sm font-normal shadow-xs hover:border-btn/40 transition"
         >
           <span>Cart</span>
           <span
             class="flex items-center justify-center w-5 h-5 rounded-full bg-btn text-white text-xs font-medium"
           >
-            {cartCount}
+            <span id="cart-count">0</span>
           </span>
-        </a>
+        </button>
 
         <!-- Mobile Menu Toggle Button -->
         <button
@@ -107,6 +103,15 @@ const navLinks = [
 </header>
 
 <script>
+  import { cart } from "../lib/cart";
+
+  const cartCount = document.querySelector<HTMLElement>("#cart-count");
+  cart.subscribe((items) => {
+    if (cartCount) {
+      cartCount.textContent = String(items.reduce((total, item) => total + item.qty, 0));
+    }
+  });
+
   const menuButton =
     document.querySelector<HTMLButtonElement>("#mobile-menu-btn");
   const mobileMenu = document.querySelector<HTMLElement>("#mobile-menu");
